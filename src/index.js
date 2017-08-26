@@ -15,7 +15,8 @@ function returnFirstArgument(arg) {
  Функция должна принимать два аргумента и возвращать сумму переданных значений
  Значение по умолчанию второго аргумента должно быть 100
  */
-function defaultParameterValue(a, b) {
+function defaultParameterValue(a, b=100) {
+    return a+b
 }
 
 /*
