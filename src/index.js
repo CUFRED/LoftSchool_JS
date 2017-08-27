@@ -26,6 +26,13 @@ function defaultParameterValue(a, b=100) {
  Количество переданных аргументов заранее неизвестно
  */
 function returnArgumentsArray() {
+    var arr= new Array();
+
+    for (var i =0; i<arguments.length; i++) {
+        arr[i]=arguments[i]
+    }
+
+    return arr;
 }
 
 /*
@@ -34,6 +41,7 @@ function returnArgumentsArray() {
  Функция должна принимать другую функцию и возвращать результат вызова переданной функции
  */
 function returnFnResult(fn) {
+    return fn();
 }
 
 /*
@@ -42,7 +50,15 @@ function returnFnResult(fn) {
  Функция должна принимать число (значение по умолчанию - 0) и возвращать функцию (F)
  При вызове F, переданное число должно быть увеличено на единицу и возвращено из F
  */
-function returnCounter(number) {
+function returnCounter(number=0) {
+
+    function F() {
+        number +=1;
+
+        return number;
+    }
+    
+    return F;
 }
 
 /*
@@ -51,7 +67,18 @@ function returnCounter(number) {
  Функция должна принимать другую функцию (F) и некоторое количество дополнительных аргументов
  Функция должна привязать переданные аргументы к функции F и вернуть получившуюся функцию
  */
-function bindFunction(fn) {
+function bindFunction(F) {
+
+    var arr= new Array();
+
+    for (var i =0; i<arguments.length; i++) {
+        arr[i]=arguments[i]
+    }
+
+    var args = [].concat(arr.slice.call(arguments)).join(',');
+
+    return F.bind(null, args);
+
 }
 
 export {

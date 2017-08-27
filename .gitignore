@@ -8,3 +8,6 @@ out/
 dist/
 node_modules/
 coverage/
+proba.html
+proba.js
+
