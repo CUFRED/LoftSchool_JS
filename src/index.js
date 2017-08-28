@@ -71,13 +71,12 @@ function bindFunction(F) {
 
     var arr= new Array();
 
-    for (var i =0; i<arguments.length; i++) {
+    for (var i =1; i<arguments.length; i++) {
+
         arr[i]=arguments[i]
     }
 
-    var args = [].concat(arr.slice.call(arguments)).join(',');
-
-    return F.bind(null, args);
+    return F.bind(null, ...arr);
 
 }
 
