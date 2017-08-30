@@ -26,7 +26,7 @@ function defaultParameterValue(a, b = 100) {
  Количество переданных аргументов заранее неизвестно
  */
 function returnArgumentsArray() {
-    /*var arr= new Array();
+    /* var arr= new Array();
 
     for (var i =0; i<arguments.length; i++) {
         arr[i]=arguments[i]
