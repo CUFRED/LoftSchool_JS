@@ -73,10 +73,13 @@ function isSomeTrue(array, fn) {
  */
 function returnBadArguments(fn) {
 
-    if (typeof(fn(arguments[0])) != 'function') {
+    /*if (typeof(fn(arguments[0])) != 'function') {
+        throw new Error ('fn is not a function');
+    } */
+
+    if (typeof fn !== 'function') {
         throw new Error ('fn is not a function');
     }
-
 
     var array_error=[];
 
@@ -85,8 +88,8 @@ function returnBadArguments(fn) {
             fn(arguments[i]);
         }
         catch (e){
-            //array_error[array_error.length]=arguments[i];
-            array_er.push(arguments[i]);
+            // array_error[array_error.length]=arguments[i];
+            array_error.push(arguments[i]);
         }
     }
 
