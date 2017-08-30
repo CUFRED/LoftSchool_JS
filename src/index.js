@@ -72,11 +72,11 @@ function isSomeTrue(array, fn) {
  - fn не является функцией (с текстом "fn is not a function")
  */
 function returnBadArguments(fn) {
-    /*
+
     if (typeof(fn(arguments[0])) != 'function') {
         throw new Error ('fn is not a function');
     }
-     */
+     
 
     var array_error=[];
 
