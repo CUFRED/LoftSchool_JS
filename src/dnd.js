@@ -83,13 +83,32 @@ function createDiv() {
  * @param {Element} target
  */
 function addListeners(target) {
+    let handler1 = function (e) {
+        target.style.position = 'absolute';
+        document.body.appendChild(target);
+        target.style.zIndex = 1000;
 
-    /* let hendler = function (e) {
+        target.style.left = e.pageX - target.offsetWidth/2 + 'px';
+        target.style.top = e.pageY - target.offsetHeight/2 + 'px';
 
-    }
+        target.addEventListener('mousemove', handler2);
 
-    target.addEventListener('mousedown', hendler);
-  */
+    };
+
+    let handler2 = function (e) {
+        target.style.left = e.pageX - target.offsetWidth/2 + 'px';
+        target.style.top = e.pageY - target.offsetHeight/2 + 'px';
+    };
+
+    let handler3 = function () {
+
+        target.removeEventListener('mousemove', handler2);
+    };
+
+    target.addEventListener('mousedown', handler1);
+    target.addEventListener('mousemove', handler2);
+    target.addEventListener('mouseup', handler3);
+
 }
 
 let addDivButton = homeworkContainer.querySelector('#addDiv');
