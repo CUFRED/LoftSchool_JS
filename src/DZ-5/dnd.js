@@ -53,7 +53,7 @@ function createDiv() {
     homeworkContainer.style.top = NumberRundom(0, myHeight) + 'px';
     homeworkContainer.style.left = NumberRundom(0, myWidth) + 'px';
     homeworkContainer.style.backgroundColor = GetRandomColor();
-    homeworkContainer.style.display = 'none';
+    // homeworkContainer.style.display = 'none';
 
   /*
     homeworkContainer.style.width ='100px';
