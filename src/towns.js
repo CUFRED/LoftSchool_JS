@@ -35,31 +35,36 @@ let homeworkContainer = document.querySelector('#homework-container');
  *
  * @return {Promise<Array<{name: string}>>}
  */
-function loadTowns(url) {
+function loadTowns() {
 
     return new Promise(function(resolve) {
         let xhr = new XMLHttpRequest();
+        let url = 'https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json';
 
         xhr.open('GET', url);
+        // xhr.responseType ='json';
         xhr.send();
-        xhr.responseType ='json';
         xhr.addEventListener('load', function() {
-            resolve(xhr.response);
+
+            let citiesArray = [];
+
+            citiesArray = JSON.parse(xhr.response);
+            citiesArray = citiesArray.sort(function (a, b) {
+                if (a.name > b.name) {
+                    return 1;
+                }
+                if (a.name < b.name) {
+                    return -1;
+                }
+
+                // a должно быть равным b
+                return 0;
+            });
+
+            resolve(citiesArray);
         });
     })
 }
-
-loadTowns('https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json')
-    .then(function(list) {
-        let towns=[];
-
-        list.forEach((sity) => {
-            towns.push(sity.name);
-        })
-        towns=towns.sort();
-
-        return towns.sort();
-    })
 
 /**
  * Функция должна проверять встречается ли подстрока chunk в строке full
@@ -75,6 +80,16 @@ loadTowns('https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.j
  * @return {boolean}
  */
 function isMatching(full, chunk) {
+    let bool = true;
+
+    full = full.toLowerCase();
+    chunk = chunk.toLowerCase();
+
+    if (full.indexOf(chunk) < 0) {
+        bool = false;
+    }
+
+    return bool;
 }
 
 let loadingBlock = homeworkContainer.querySelector('#loading-block');
