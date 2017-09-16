@@ -61,6 +61,9 @@ function loadTowns() {
                 return 0;
             });
 
+            loadingBlock.style.display='none';
+            filterBlock.style.display='';
+
             resolve(citiesArray);
         });
     })
@@ -85,7 +88,7 @@ function isMatching(full, chunk) {
     full = full.toLowerCase();
     chunk = chunk.toLowerCase();
 
-    if (full.indexOf(chunk) < 0) {
+    if (full.indexOf(chunk) < 0 || full.indexOf(chunk) < 0) {
         bool = false;
     }
 
@@ -96,9 +99,41 @@ let loadingBlock = homeworkContainer.querySelector('#loading-block');
 let filterBlock = homeworkContainer.querySelector('#filter-block');
 let filterInput = homeworkContainer.querySelector('#filter-input');
 let filterResult = homeworkContainer.querySelector('#filter-result');
-let townsPromise;
+// let townsPromise;
+
+loadTowns();
 
 filterInput.addEventListener('keyup', function() {
+    loadTowns().
+    then((townsPromise) => {
+        let result = [];
+
+        for (var i =0; i < townsPromise.length; i++) {
+            if (filterInput.value.length == 0) {
+                result = [];
+            } else {
+                if (isMatching(townsPromise[i].name, filterInput.value) == true) {
+                    result.push(townsPromise[i]);
+                }// end if-2
+            } // end if-1
+        } // end for
+
+        while (filterResult.firstChild) {
+            filterResult.removeChild(filterResult.firstChild);
+        }
+
+        result.forEach((item) => {
+            let el = document.createElement('div');
+
+            el.innerText = item.name;
+            filterResult.appendChild(el);
+        })
+
+    // console.log(' rez-filtr=', result);
+
+        return result;
+
+    })
 });
 
 export {
