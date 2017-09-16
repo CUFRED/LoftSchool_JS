@@ -1,59 +1,44 @@
-/* ДЗ 6.1 - Асинхронность и работа с сетью */
+/* ДЗ 7.1 - BOM */
 
 /**
- * Функция должна создавать Promise, который должен быть resolved через seconds секунду после создания
+ * Функция должна создавать окно с указанным именем и размерами
  *
- * @param {number} seconds - количество секунд, через которое Promise должен быть resolved
- * @return {Promise}
+ * @param {number} name - имя окна
+ * @param {number} width - ширина окна
+ * @param {number} height - высота окна
+ * @return {Window}
  */
-function delayPromise(seconds) {
-    seconds = 1000;
-
-    return new Promise(function(resolve) {
-        setTimeout(function() {
-            resolve();
-        }, seconds);
-    })
+function createWindow(name, width, height) {
 }
 
 /**
- * Функция должна вернуть Promise, который должен быть разрешен массивом городов, загруженным из
- * https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json
- * Элементы полученного массива должны быть отсортированы по имени города
+ * Функция должна закрывать указанное окно
  *
- * @return {Promise<Array<{name: String}>>}
+ * @param {Window} window - окно, размер которого надо изменить
  */
-function loadAndSortTowns() {
+function closeWindow(window) {
+}
 
-    return new Promise(function(resolve) {
+/**
+ * Функция должна создавать cookie с указанными именем и значением
+ *
+ * @param name - имя
+ * @param value - значение
+ */
+function createCookie(name, value) {
+}
 
-        let xhr = new XMLHttpRequest();
-        let url = 'https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json';
-
-        xhr.open('GET', url);
-        xhr.send();
-        xhr.addEventListener('load', function() {
-            let citiesArray = [];
-
-            citiesArray = JSON.parse(xhr.response);
-            citiesArray = citiesArray.sort(function (a, b) {
-                if (a.name > b.name) {
-                    return 1;
-                }
-                if (a.name < b.name) {
-                    return -1;
-                }
-
-                // a должно быть равным b
-                return 0;
-            });
-
-            resolve(citiesArray);
-        });
-    })
+/**
+ * Функция должна удалять cookie с указанным именем
+ *
+ * @param name - имя
+ */
+function deleteCookie(name) {
 }
 
 export {
-    delayPromise,
-    loadAndSortTowns
+    createWindow,
+    closeWindow,
+    createCookie,
+    deleteCookie
 };
