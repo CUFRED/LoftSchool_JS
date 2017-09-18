@@ -76,53 +76,12 @@ filterNameInput.addEventListener('keyup', function() {
 
 });
 
-
-/*  // ---- Пытался примнить промис, но непонятно когдо его переводить в - разрешенное состояние
-filterNameInput.addEventListener('keyup', function() {
-    return new Promise(function (resolve) {
-         let cookieObj= readCookie ();
-         let FilteredObj = new Object();
-            for (var key in cookieObj) {
-                console.log('cookieObj-filter=', cookieObj);
-                if (filterNameInput.value.length == 0) {
-                    FilteredObj[key] = cookieObj[key];
-                    console.log('FilteredObj-0=', FilteredObj);
-                } else {
-                    if (isMatching(key, filterNameInput.value) == true) {
-                        FilteredObj[key] = cookieObj[key];
-                        console.log('FilteredObj-1=', FilteredObj);
-                    } else {
-                        if (isMatching(cookieObj[key], filterNameInput.value) == true) {
-                            FilteredObj[key] = cookieObj[key];
-                            console.log('FilteredObj-2=', FilteredObj);
-                        } //end if-3
-                    }// end if-2
-                } // end if-1
-            }
-         console.log('FilteredObj=', FilteredObj);
-         resolve(FilteredObj);
-    })
-});
-*/
-
 // --- Обработчик- добаляет новые куки в таблицу и в браузер
 addButton.addEventListener('click', () => {
-    if (filterNameInput.value =='') {
-        createCookie(addNameInput.value, addValueInput.value);
-        editRow(listTable, addNameInput.value, addValueInput.value);
-    } else {
-        createCookie(addNameInput.value, addValueInput.value);
 
-        if (comparedTabAndCooki(listTable, addNameInput.value, addValueInput.value ) == 1) {
-            editRow(listTable, addNameInput.value, addValueInput.value);
-            console.log('cookie-!!!=', document.cookie);
-        } else if (comparedTabAndCooki(listTable, addNameInput.value, addValueInput.value ) == 0){
-            //console.log('False =', comparedTabAndCooki(listTable, addNameInput.value, addValueInput.value ));
-            addRow(listTable, addNameInput.value, addValueInput.value);
-        } else if (comparedTabAndCooki(listTable, addNameInput.value, addValueInput.value ) == 2) {
-            rowDel(listTable, addNameInput.value );
-        }
-    }
+    createCookie(addNameInput.value, addValueInput.value);
+    editRow(listTable, addNameInput.value, addValueInput.value);
+
     readCookie();
 });
 
@@ -200,40 +159,56 @@ function addRow(id, tname, tvalue) {
 }
 
 // ---- Функция редактирования таблицы с куки - добаляет новые и обновляет значения старых куки
-function editRow(id, tname, tvalue, filter = false) {
+function editRow(id, tname, tvalue) {
 
     var rows = id.rows;
 
-    if (rows.length == 0) {
-        addRow(id, tname, tvalue);
-    } else {
-        let booledit = false;
-        console.log('rows=', rows, 'lenght=', rows.length);
-        for (var i = 0; i < rows.length; i++) {
-            var td = rows[i].cells;
-            //console.log('i=', i, 'td=', td);
-            //console.log('td[0]=', td[0].innerText, 'td[1]=', td[1].innerText, 'tname=', tname, 'tvalue=', tvalue);
+    if (filterNameInput.value =='') { // филтер не заполнен
+        if (rows.length == 0) {
+            addRow(id, tname, tvalue);
+        } else {
+            let booledit = false;
 
-            if (td[0].innerText == tname) {
+            for (var i = 0; i < rows.length; i++) {
+                var td = rows[i].cells;
 
-                td[1].innerText = tvalue;
-                booledit = true;
+                if (td[0].innerText == tname) {
+                    td[1].innerText = tvalue;
+                    booledit = true;
+                }
+            }
+            if (booledit == false) {
+                addRow(id, tname, tvalue);
+            }
+        }
+
+    } else { // фильтр заполнен
+        console.log('filterNameInput.value=', filterNameInput.value);
+        if (tname == filterNameInput.value || tvalue == filterNameInput.value ) {
+
+            if (rows.length == 0) {
+                addRow(id, tname, tvalue);
             }
 
         }
-        if (booledit == false) {
-            addRow(id, tname, tvalue);
-        }
+
+
     }
+
+
 }
 
+/*
 // --- Функция сравнения данных таблицы с  данными вводимого куки ----
 function  comparedTabAndCooki(id, key, value) {
     var rows = id.rows;
-    var boolcomp = 0;
-    if (rows.length == 0) {
+    var boolcomp = -1;
+    if (rows.length == 0 && filterNameInput == '') {
         boolcomp = 0;
-    } else {
+    }
+
+
+    else {
         console.log('rows-Comp=', rows, 'lenght=', rows.length);
         for (var i = 0; i < rows.length; i++) {
             var td = rows[i].cells;
@@ -241,7 +216,7 @@ function  comparedTabAndCooki(id, key, value) {
             //console.log('td[0]=', td[0].innerText, 'td[1]=', td[1].innerText, 'tname=', tname, 'tvalue=', tvalue);
 
             //if (isMatching(key, td[0].innerText) == true) {
-            if (td[0].innerText == key && td[1].innerText == value) { // && td[1].innerText != value)
+            if (td[0].innerText == key || td[1].innerText == value) { // && td[1].innerText != value)
                 boolcomp = 1;
                 console.log('boolcomp-true', boolcomp);
                 break;
@@ -262,12 +237,21 @@ function  comparedTabAndCooki(id, key, value) {
                 boolcomp = 2;
                 console.log('boolcomp-false', boolcomp);
             }
+            else if (td[0].innerText != key && td[1].innerText != value) {
+                console.log('key=', key, 'value=', value);
+                boolcomp = 2;
+                console.log('boolcomp-false', boolcomp);
+
+            }
 
         }
     }
     console.log("boolcomp=", boolcomp);
     return boolcomp;
 }
+
+*/
+
 // --- Функция  удаление строки из таблицы
 function rowDel(id, key) {
     var rows = id.rows;
