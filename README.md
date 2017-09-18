@@ -7,3 +7,4 @@
 * `npm run build` - собрать проект в папку `build`
 * `npm run test` - запустить тесты
 * `npm run codestyle` - проверить стиль кода
+
